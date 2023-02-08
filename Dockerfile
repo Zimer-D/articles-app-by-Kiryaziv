@@ -3,7 +3,7 @@ ARG BUILD_CONTEXT
 WORKDIR /base
 COPY package.json .
 COPY yarn.lock .
-COPY ./apps/$BUILD_CONTEXT/package.json apps/$BUILD_CONTEXT/
+COPY ./workspaces/$BUILD_CONTEXT/package.json workspaces/$BUILD_CONTEXT/
 RUN yarn install
-COPY ./apps/$BUILD_CONTEXT apps/$BUILD_CONTEXT
+COPY ./workspaces/$BUILD_CONTEXT workspaces/$BUILD_CONTEXT
 RUN yarn start:$BUILD_CONTEXT
