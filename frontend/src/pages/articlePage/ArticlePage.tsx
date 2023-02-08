@@ -1,14 +1,15 @@
 import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { Card, Spinner } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Button, Card, Spinner } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
 import { ArticleItem } from "../../types";
 
 const ArticlePage = () => {
     const { id } = useParams();
     const [item, setItem] = useState<ArticleItem>();
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true)
@@ -22,10 +23,14 @@ const ArticlePage = () => {
         }
         fetchData();
     }, [id]);
-    if(loading){return <Spinner animation="border" variant="secondary" />}
+    if (loading) { return <Spinner animation="border" variant="secondary" /> }
     return (
         <>
-            <Card style={{ width: '90%' }}>
+            <Card
+                bg={'dark'}
+                text='white'
+                style={{marginTop:'20px'}}
+            >
                 <Card.Body>
                     <Card.Title>{item?.title}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{moment(item?.date).format('LLLL')}</Card.Subtitle>
@@ -33,6 +38,13 @@ const ArticlePage = () => {
                         {item?.text}
                     </Card.Text>
                 </Card.Body>
+                <Card.Footer>
+                    <Button
+                        variant='secondary'
+                        onClick={() => navigate(-1)}>
+                        Back to articles
+                    </Button>
+                </Card.Footer>
             </Card>
         </>
     );
